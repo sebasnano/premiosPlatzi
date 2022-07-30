@@ -1,0 +1,30 @@
+<form action="{% url 'polls:vote' question.id %}" method="post">
+  {% csrf_token %}
+  <fieldset>
+    <legend><h1>{{ question.question_text }}</h1></legend>
+    {% if error_message %}
+    <div class="alert alert-danger">{{ error_message }}</div>
+    {% endif %} {% for choice in question.choice_set.all %}
+    <input
+      type="radio"
+      class="form-check-input"
+      name="choice"
+      value="{{ choice.id }}"
+      id="choice{{ forloop.counter }}"
+    />
+    <label for="choice{{ forloop.counter }}"> {{ choice.choice_text }} </label>
+    <br />
+    {% endfor %}
+  </fieldset>
+  <br>
+  <input type="submit" value="Vote" />
+</form>
+
+{% comment %}
+<h1>{{ question.question_text }}</h1>
+<ul>
+  {% for choice in question.choice_set.all %}
+  <li>{{ choice.choice_text }}</li>
+  {% endfor %}
+</ul>
+{% endcomment %}
